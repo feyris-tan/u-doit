@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D7949BFD-7088-45FE-A284-D35D58815DF4}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>u_doit</RootNamespace>
+    <AssemblyName>u-doit</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <Commandlineparameters>scan-local online 1cak755 http://192.168.0.126:2500/src/jsonrpc.php admin admin</Commandlineparameters>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json.Net20">
+      <HintPath>..\..\..\..\Libraries\Newtonsoft.Json.Net20.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config.cs" />
+    <Compile Include="I-DoIt\Annotations.cs" />
+    <Compile Include="I-DoIt\CategoryCreateResponse.cs" />
+    <Compile Include="I-DoIt\CategoryDeleteResponse.cs" />
+    <Compile Include="I-DoIt\CategoryInfo.cs" />
+    <Compile Include="I-DoIt\ClassBuilder\ClassBuilder.cs" />
+    <Compile Include="I-DoIt\ClassBuilder\CSharpSourceWriter.cs" />
+    <Compile Include="I-DoIt\ConstantsResponse.cs" />
+    <Compile Include="I-DoIt\CreateObjectResponse.cs" />
+    <Compile Include="I-DoIt\DialogEditResponse.cs" />
+    <Compile Include="I-DoIt\EnumDeserializer.cs" />
+    <Compile Include="I-DoIt\EnumInfo.cs" />
+    <Compile Include="I-DoIt\DialogFieldInfo.cs" />
+    <Compile Include="I-DoIt\FloatDeserializer.cs" />
+    <Compile Include="I-DoIt\Idoit.cs" />
+    <Compile Include="I-DoIt\BrokenInt32Deserializer.cs" />
+    <Compile Include="I-DoIt\LoginResponse.cs" />
+    <Compile Include="I-DoIt\LogoutResponse.cs" />
+    <Compile Include="I-DoIt\CmdbObject.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Accounting.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Address.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\AdministrationService.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\AirConditioning.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Aircraft.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Applications.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\AssignedCards.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\AssignedLogicalUnits.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\AssignedLogPorts.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\AssignedObjects.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\AssignedPorts.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\AssignedWorkplaces.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\AssignedWorkstation.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Audit.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Backup.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\BackupassignedObjects.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\BackwardsServiceAssignment.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Branch.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Cable.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Certificate.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\ClusterMembers.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\ClusterMemberships.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\ComputingResources.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Contract.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\ContractAssignment.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\ContractInformation.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Controller.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Cpu.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\CryptoCard.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\CucmVoipLine.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\CucmVoipTelephone.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\DatabaseAccess.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\DatabaseAssignment.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\DatabaseGateway.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\DatabaseObjects.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Dbms.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Desktop.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Dhcp.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\EmergencyPlan.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\EmergencyPlanAssignment.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\EmergencyPowerSupply.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Files.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\FormFactor.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\GraphicCard.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\GroupMemberships.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\GuestSystems.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\HostBusAdapterhba.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\HostTagsdynamic.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\InstanceOracleDatabase.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Interface.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\ItserviceAssignment.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\ItserviceComponents.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\ItserviceType.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Ldap.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\LocallyAssignedObjects.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\LogicalDevicesclient.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\LogicalDevicesldevServer.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\LogicalLocation.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Login.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\ManualAssignment.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\MasterData.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Memory.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Middleware.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\MobileRadio.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Model.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Nagiosapplication.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Network.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\ObjectGroup.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\ParallelRelations.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Passwords.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Pdu.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\PersonGroupMemberships.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\PersonGroups.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Persons.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\PowerSupplier.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Replication.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\ReplicationPartner.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Room.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Routing.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\SanZoning.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\ServiceAssignment.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Services.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Slots.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\SmartCardCertificate.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Snmp.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Soastacks.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\SoundCard.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Stacking.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Switch.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Telephonefax.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\TsiService.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\UninterruptiblePowerSupply.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Variants.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Vehicle.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Version.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\Wan.cs" />
+    <Compile Include="I-DoIt\Objects\AutoCategories\WiringSystem.cs" />
+    <Compile Include="I-DoIt\Objects\Categories\Drive.cs" />
+    <Compile Include="I-DoIt\Objects\Categories\Global.cs" />
+    <Compile Include="I-DoIt\Objects\Categories\Share.cs" />
+    <Compile Include="I-DoIt\Objects\Categories\SoftwareAssignment.cs" />
+    <Compile Include="I-DoIt\Objects\Categories\NullCategory.cs" />
+    <Compile Include="I-DoIt\Objects\Categories\StorageDevice.cs" />
+    <Compile Include="I-DoIt\Objects\Category.cs" />
+    <Compile Include="I-DoIt\ObjectType.cs" />
+    <Compile Include="I-DoIt\ObjectTypeCategoriesResponse.cs" />
+    <Compile Include="I-DoIt\VersionResponse.cs" />
+    <Compile Include="IOperatingSystemHandler.cs" />
+    <Compile Include="JsonRpc\JsonRpcCaller.cs" />
+    <Compile Include="JsonRpc\JsonRpcClass.cs" />
+    <Compile Include="JsonRpc\JsonRpcException.cs" />
+    <Compile Include="JsonRpc\Request.cs" />
+    <Compile Include="JsonRpc\Response.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SoftwareInfo.cs" />
+    <Compile Include="Win32NTHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
