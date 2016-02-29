@@ -794,6 +794,19 @@ namespace u_doit
 
         private void ScanSoftwareRegistryKey(RegistryKey rk, List<SoftwareInfo> outputList)
         {
+            while (true)
+            {
+                //Zunächst Liste von nullern säubern, um Crash im nächsten Block zu vermeiden. (kann bei Win7-64 mal passieren...)
+                SoftwareInfo si = outputList.Find(x => string.IsNullOrEmpty(x.productName));
+                if (si != null)
+                {
+                    outputList.Remove(si);
+                    Console.WriteLine("-> Found weird null SoftwareEntry in the WMI...");
+                    continue;
+                }
+                break;
+            }
+
             foreach (string subKeyName in rk.GetSubKeyNames())
             {
                 RegistryKey subkey = rk.OpenSubKey(subKeyName, false);

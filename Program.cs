@@ -43,6 +43,9 @@ namespace u_doit
                 case "interactive":
                     Interactive(args[2], args[3], args[4], args[5]);
                     return;
+                default:
+                    Usage();
+                    return;
             }
 
             /*
@@ -60,19 +63,20 @@ namespace u_doit
         
         static void Usage()
         {
-            /*
-             * Scan while on-line:
-             * Syntax: scan-local online [apikey] [url] [username] [password]
-             *    e.g: scan-local online 1cak755 http://127.0.0.1:2500/src/jsonrpc.php admin admin
-             *    
-             * Generate C# Classes for i-doit Constants (only useful for u-doit development):
-             * Syntax: generate-classes [apikey] [url] [username] [password]
-             *    e.g: generate-classes 1cak755 http://127.0.0.1:2500/src/jsonrpc.php admin admin
-             *    
-             * Open up a kind-of interactive i-doit Shell (only useful for u-doit development):
-             * Syntax: interactive [apikey] [url] [username] [password]
-             *    e.g: interactive 1cak755 http://127.0.0.1:2500/src/jsonrpc.php admin admin
-             */
+            Console.WriteLine("u-doit 1.0");
+            Console.WriteLine("");
+            Console.WriteLine("Scan while on-line:");
+            Console.WriteLine("Syntax: scan-local online [apikey] [url] [username] [password]");
+            Console.WriteLine("   e.g: scan-local online 1cak755 http://127.0.0.1:2500/src/jsonrpc.php admin admin");
+            Console.WriteLine("");
+            Console.WriteLine("Generate C# Classes for i-doit Constants:");
+            Console.WriteLine("Syntax: generate-classes [apikey] [url] [username] [password]");
+            Console.WriteLine("   e.g: generate-classes 1cak755 http://127.0.0.1:2500/src/jsonrpc.php admin admin");
+            Console.WriteLine("");
+            /*Console.WriteLine("Open up a kind-of interactive i-doit Shell (only useful for u-doit development):");
+            Console.WriteLine("Syntax: interactive [apikey] [url] [username] [password]");
+            Console.WriteLine("e.g: interactive 1cak755 http://127.0.0.1:2500/src/jsonrpc.php admin admin");
+            Console.WriteLine("");*/
         }
 
         private static void AnalyzeCategories(Dictionary<string, string> gCats, Idoit idoit, List<string> ignoredList)
