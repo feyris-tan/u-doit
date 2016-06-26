@@ -43,6 +43,15 @@ namespace u_doit
                 case "interactive":
                     Interactive(args[2], args[3], args[4], args[5]);
                     return;
+                case "getKey":
+                    if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+                    {
+                        Console.WriteLine("This is {0}, so you probably won't need a key for it.",
+                            Environment.OSVersion.Platform.ToString());
+                            return;
+                    }
+                    Console.WriteLine(new Win32NTHandler().OperatingSystemLicensingInfo());
+                    return;
             }
 
             /*
