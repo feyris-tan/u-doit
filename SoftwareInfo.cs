@@ -23,6 +23,10 @@ namespace u_doit
         {
             SoftwareInfo other = (obj as SoftwareInfo);
             if (other == null) return false;
+            
+            if ((productName == null) && (other.productName == null)) 
+                return true;
+
             return productName.Equals(other.productName);
         }
 

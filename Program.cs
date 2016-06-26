@@ -52,6 +52,9 @@ namespace u_doit
                     }
                     Console.WriteLine(new Win32NTHandler().OperatingSystemLicensingInfo());
                     return;
+				default:
+					Usage();
+					return;
             }
 
             /*
