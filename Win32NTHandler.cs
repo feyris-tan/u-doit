@@ -230,11 +230,52 @@ namespace u_doit
                         var isWin8OrUp = (Environment.OSVersion.Version.Major == 6 && System.Environment.OSVersion.Version.Minor >= 2) || (Environment.OSVersion.Version.Major > 6);
                         if (isWin8OrUp)
                         {
-                            return DecodeProductKeyWin8AndUp(digitalProductId);
+                            string tmp = DecodeProductKeyWin8AndUp(digitalProductId);
+                            if (tmp.EndsWith("3V66T") && IsWindows10())                 //If we're dealing with an updated Windows 10
+                            {
+                                return DecodeWindows10UpdateKey();
+                            }
+                            else
+                            {
+                                return tmp;
+                            }
                         }
                         else
                         {
                             return DecodeXpStyleProductKey(digitalProductId);
+                        }
+                    }
+                }
+                throw new ApplicationException(
+                    "Konnte CD-Key nicht bestimmen, da ein Registry-Query fehlgeschlagen ist...");
+            }
+
+            private static string DecodeWindows10UpdateKey()
+            {
+                UIntPtr regKeyHandle;
+                if (
+                    RegOpenKeyEx(HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Internet Explorer\Registration", 0,
+                        KEY_QUERY_VALUE | KEY_WOW64_64KEY, out regKeyHandle) == 0)
+                {
+                    uint type;
+                    byte[] digitalProductId = new byte[2048];
+                    int cbData = 2048;
+                    if (RegQueryValueEx(regKeyHandle, "DigitalProductId", 0, out type, digitalProductId, ref cbData) ==
+                        0)
+                    {
+                        byte[] digitalProductId4 = new byte[2048];
+                        cbData = 2048;
+                        if (RegQueryValueEx(regKeyHandle, "DigitalProductId4", 0,out type,digitalProductId4,ref cbData) == 0)
+                        {
+                            string ascii =Encoding.ASCII.GetString(digitalProductId4, 0x378, 0x20).Replace("\0", string.Empty).Trim();
+                            if (ascii.Contains("X15"))
+                            {
+                                return DecodeXpStyleProductKey(digitalProductId);
+                            }
+                            else
+                            {
+                                return DecodeProductKeyWin8AndUp(digitalProductId);
+                            }
                         }
                     }
                 }
