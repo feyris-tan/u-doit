@@ -10,7 +10,7 @@ using u_doit.Objects.Categories;
 
 namespace u_doit.I_DoIt
 {
-    class Idoit : JsonRpcClass
+    class Idoit : JsonRpcClass, u_doit.I_DoIt.IIdoit
     {
         public VersionResponse Version()
         {

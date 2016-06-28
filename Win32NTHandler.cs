@@ -662,7 +662,7 @@ namespace u_doit
 
         public List<StorageDevice> hardDisks;
 
-        public List<Drive> GetDrives(Idoit idoit)
+        public List<Drive> GetDrives(IIdoit idoit)
         {
             if (hardDisks == null) GetStorageDevices();
             IdoitEnumerator fsEnumerator = idoit.Dialog(new Drive().Constant, "filesystem");
@@ -701,7 +701,7 @@ namespace u_doit
             return result;
         }
 
-        public List<Memory> GetMemoryBanks(Idoit idoit)
+        public List<Memory> GetMemoryBanks(IIdoit idoit)
         {
             List<Memory> result = new List<Memory>();
             IdoitEnumerator titles = idoit.Dialog(new Memory().Constant, "title");
@@ -791,6 +791,8 @@ namespace u_doit
 
         public List<SoftwareInfo> GetSoftware()
         {
+            Console.Write("Enumerating software");
+            int swEnum = 0;
             if (Win32KernelCalls.IsOS64Bit())
             {
                 //64-bit OS
@@ -810,6 +812,7 @@ namespace u_doit
                         child.registrationKey = "";
                         child.version = (string) queryObj["Version"];
                         result.Add(child);
+                        if ((swEnum++ % 10) == 0) Console.Write(".");
                     }
                 }
                 catch (Exception e)
@@ -822,6 +825,7 @@ namespace u_doit
                     Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall");
                 ScanSoftwareRegistryKey(targetKey, result);
                 result.Sort((x, y) => (x.CompareTo(y)));
+                Console.WriteLine(".");
                 return result;
             }
             else
@@ -829,6 +833,7 @@ namespace u_doit
                 //32-bit OS (trivial...)
                 RegistryKey targetKey =
                     Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall");
+                Console.WriteLine(".");
                 return ScanSoftwareRegistryKey(targetKey);
             }
         }
@@ -906,7 +911,7 @@ namespace u_doit
             return result;
         }
 
-        public List<SoundCard> GetSoundCards(Idoit idoit)
+        public List<SoundCard> GetSoundCards(IIdoit idoit)
         {
             IdoitEnumerator manufacEnum = idoit.Dialog(new SoundCard().Constant, "manufacturer");
             List<SoundCard> result = new List<SoundCard>();

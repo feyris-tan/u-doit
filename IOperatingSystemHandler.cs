@@ -13,11 +13,11 @@ namespace u_doit
         bool IsServer();
         Cpu[] GetCpu();
         List<StorageDevice> GetStorageDevices();
-        List<Drive> GetDrives(Idoit idoit);
-        List<Memory> GetMemoryBanks(Idoit idoit);
+        List<Drive> GetDrives(IIdoit idoit);
+        List<Memory> GetMemoryBanks(IIdoit idoit);
         List<SoftwareInfo> GetSoftware();
         List<Share> GetShares();
-        List<SoundCard> GetSoundCards(Idoit idoit);
+        List<SoundCard> GetSoundCards(IIdoit idoit);
         string uname();
         bool OperatingSystemNeedsLicense();
         string OperatingSystemLicensingInfo();

@@ -61,6 +61,8 @@
     <Compile Include="I-DoIt\FloatDeserializer.cs" />
     <Compile Include="I-DoIt\Idoit.cs" />
     <Compile Include="I-DoIt\BrokenInt32Deserializer.cs" />
+    <Compile Include="I-DoIt\IdoitEmulator.cs" />
+    <Compile Include="I-DoIt\IIdoit.cs" />
     <Compile Include="I-DoIt\LoginResponse.cs" />
     <Compile Include="I-DoIt\LogoutResponse.cs" />
     <Compile Include="I-DoIt\CmdbObject.cs" />

@@ -52,6 +52,26 @@ namespace u_doit
                     }
                     Console.WriteLine(new Win32NTHandler().OperatingSystemLicensingInfo());
                     return;
+                case "hwSummary":
+                    FileInfo outFile;
+                    if (args.Length == 1)
+                    {
+                        outFile = new FileInfo(Environment.MachineName + ".txt");
+                    }
+                    else
+                    {
+                        outFile = new FileInfo(args[1]);
+                    }
+                    if (outFile.Exists)
+                    {
+                        outFile.Delete();
+                    }
+                    FileStream outStream = outFile.OpenWrite();
+                    StreamWriter outWriter = new StreamWriter(outStream, System.Text.Encoding.UTF8);
+                    HardwareSummary(outWriter);
+                    outWriter.Flush();
+                    outWriter.Close();
+                    return;
 				default:
 					Usage();
 					return;
@@ -217,15 +237,11 @@ namespace u_doit
             
             //Rauskriegen, auf was für einem OS wir laufen
             IOperatingSystemHandler osHandler;
-            switch (Environment.OSVersion.Platform)
+            osHandler = DetectOperatingSystem();
+            if (osHandler == null)
             {
-                case PlatformID.Win32NT:
-                    osHandler = new Win32NTHandler();
-                    break;
-                default:
-                    Console.WriteLine("-> Sorry, your platform ({0}) is not yet supported...",Environment.OSVersion.Platform);
-                    idoit.Logout();
-                    return;
+                idoit.Logout();
+                return;
             }
 
             //Herausfinden was wir für eine Art von PC sind...
@@ -522,6 +538,22 @@ namespace u_doit
 
         }
 
+        private static IOperatingSystemHandler DetectOperatingSystem()
+        {
+            IOperatingSystemHandler osHandler;
+            switch (Environment.OSVersion.Platform)
+            {
+                case PlatformID.Win32NT:
+                    osHandler = new Win32NTHandler();
+                    break;
+                default:
+                    Console.WriteLine("-> Sorry, your platform ({0}) is not yet supported...", Environment.OSVersion.Platform);
+                    osHandler = null;
+                    break;
+            }
+            return osHandler;
+        }
+
         private static void Interactive(string apiKey, string url, string username, string password)
         {
             Idoit idoit = Idoit.Login(apiKey, url, username, password);
@@ -557,6 +589,54 @@ namespace u_doit
             idoit.Logout();
         }
 
-        
+        private static void HardwareSummary(StreamWriter output)
+        {
+            IOperatingSystemHandler os = DetectOperatingSystem();
+            IdoitEmulator emu = new IdoitEmulator();
+
+            if (os == null)
+            {
+                Console.WriteLine("Unsupported Platform.");
+                return;
+            }
+
+            output.WriteLine("Machine Name: {0}", Environment.MachineName);
+            output.WriteLine("Logical CPUs: {0}", Environment.ProcessorCount);
+            output.WriteLine("Domain Name: {0}", Environment.UserDomainName);
+            output.WriteLine("");
+            output.WriteLine("Physical CPUs: ");
+            foreach(Cpu cpu in os.GetCpu())
+            {
+                output.WriteLine("{0} ({1} MHZ) ({2} cores)", cpu.title, cpu.frequency, cpu.cores);
+            }
+
+            output.WriteLine("");
+            output.WriteLine("Logical Volumes: {0}");
+            foreach(Drive d in os.GetDrives(emu))
+            {
+                output.WriteLine("{0} \t {1} GB, Volume serial number: {2}", d.mount_point, d.capacity, d.serial);
+            }
+
+            output.WriteLine("");
+            output.WriteLine("Memory banks:");
+            foreach(var mb in os.GetMemoryBanks(emu))
+            {
+                output.WriteLine("1x {1} - {0} MB", mb.capacity,mb.description);
+            }
+
+            output.WriteLine("");
+            output.WriteLine("Storage devices:");
+            foreach(var stor in os.GetStorageDevices())
+            {
+                output.WriteLine("{0}: {1} ({2} GB)", stor.type, stor.title, stor.capacity);
+            }
+
+            output.WriteLine("");
+            output.WriteLine("Installed Programs and features:");
+            foreach (var s in os.GetSoftware())
+            {
+                output.WriteLine("{1} {2} (by {0})", s.manufacterer, s.productName, s.version);
+            }
+        }
     }
 }
