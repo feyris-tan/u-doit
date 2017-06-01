@@ -41,7 +41,7 @@ namespace u_doit.Objects.Categories
 	    {
 	        Memory other = (obj as Memory);
 	        if (other == null) return false;
-	        return other.title == this.title;
+	        return (other.title == this.title) && (other.capacity == other.capacity);
 	    }
 	}
 

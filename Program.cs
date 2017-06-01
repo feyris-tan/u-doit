@@ -500,8 +500,16 @@ namespace u_doit
                         Global licenseGlobal = idoit.CategoryRead<Global>(licenseCmdbObject.id, new Global())[0];
                         licenseGlobal.description = cdKey;
 
-                        idoit.CategoryCreate<Global>(licenseCmdbObject, licenseGlobal); //Gut zu wissen: Wenn eine Kategorie nur einmal in einem Objekt vorhanden ist, wird
-                        //sie durch Create überschrieben...
+                        try
+                        {
+                            idoit.CategoryCreate<Global>(licenseCmdbObject, licenseGlobal); //Gut zu wissen: Wenn eine Kategorie nur einmal in einem Objekt vorhanden ist, wird
+                            //sie durch Create überschrieben...
+                        }
+                        catch (JsonRpcException rpcException)
+                        {
+                            Console.WriteLine(rpcException.Error.data.ToString());
+                        }
+                        
                     }
                     //osSoftwareAssignment.assigned_license = licenseCmdbObject.id;     //kann nicht direkt zugewiesen werden, gibt eine Exception dass irgendwelche SQL-Constraints nicht erfüllt sind...
 

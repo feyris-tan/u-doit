@@ -391,6 +391,7 @@ namespace u_doit
 					switch (actualType)
                     {
 					case ChassisTypes.Desktop:
+                    case ChassisTypes.MiniTower:
                             return false;
 					case ChassisTypes.Notebook:
 						return true;
@@ -716,10 +717,12 @@ namespace u_doit
         public List<Memory> GetMemoryBanks(IIdoit idoit)
         {
             List<Memory> result = new List<Memory>();
+            List<string> knownBankLabels = new List<string>();
+
             IdoitEnumerator titles = idoit.Dialog(new Memory().Constant, "title");
             IdoitEnumerator manufactors = idoit.Dialog(new Memory().Constant, "manufacturer");
             IdoitEnumerator type = idoit.Dialog(new Memory().Constant, "type");
-
+            int bankNo = 0;
             try
             {
                 ManagementObjectSearcher searcher =
@@ -728,6 +731,8 @@ namespace u_doit
 
                 foreach (ManagementObject queryObj in searcher.Get())
                 {
+                    bankNo++;
+
                     string actualPartNumber = (string) queryObj["PartNumber"];                                      //ältere RAM Bänke geben evtl. null zurück  
                     if (!string.IsNullOrEmpty(actualPartNumber)) actualPartNumber = actualPartNumber.Trim();
 
@@ -752,12 +757,21 @@ namespace u_doit
 
                     Memory child = new Memory();
                     child.quantity = 1;
-                    if (!titles.TestTitle(queryObj["BankLabel"].ToString()))
+                    string bankLabel = queryObj["BankLabel"].ToString();
+                    if (knownBankLabels.Contains(bankLabel))
                     {
-                        idoit.DialogEdit(new Memory(), "title", queryObj["BankLabel"].ToString());
+                        bankLabel = "Unknown Memory Bank " + bankNo;
+                    }
+                    else
+                    {
+                        knownBankLabels.Add(bankLabel);
+                    }
+                    if (!titles.TestTitle(bankLabel))
+                    {
+                        idoit.DialogEdit(new Memory(), "title", bankLabel);
                         titles = idoit.Dialog(new Memory().Constant, "title");
                     }
-                    child.title = titles.FindTitleLike(queryObj["BankLabel"].ToString());
+                    child.title = titles.FindTitleLike(bankLabel);
 
                     if (IsRamManufacturerSpecified(actualManufacturer))
                     {
