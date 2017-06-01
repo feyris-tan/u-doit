@@ -12,6 +12,7 @@ using u_doit.I_DoIt.Objects;
 using u_doit.I_DoIt.Objects.Categories;
 using u_doit.JsonRpc;
 using u_doit.Objects.Categories;
+using Version = System.Version;
 
 namespace u_doit
 {
@@ -185,6 +186,12 @@ namespace u_doit
             {
                 idoit = Idoit.Login(apiKey, url, username, password);
             }
+            catch (JsonRpcException rpcException)
+            {
+                Console.WriteLine("-> Unable to connect to i-doit:");
+                Console.WriteLine(rpcException.Error.message);
+                return;
+            }
             catch (WebException we)
             {
                 Console.WriteLine("-> Unable to connect to i-doit:");
@@ -193,7 +200,8 @@ namespace u_doit
             }
 
             VersionResponse vr = idoit.Version();
-            if (!vr.version.Equals("1.4.8"))
+            Version parsedVersion = new Version(vr.version);
+            if (parsedVersion < new Version(1,4,8))
             {
                 Console.WriteLine("-> This Program requires i-doit 1.4.8");
                 idoit.Logout();

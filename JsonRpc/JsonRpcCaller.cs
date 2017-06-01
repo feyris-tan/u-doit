@@ -68,7 +68,7 @@ namespace u_doit.JsonRpc
 
             if (r.error != null)
             {
-                throw new JsonRpcException(r.error.data.ToString());
+                throw new JsonRpcException(r.error);
             }
             return r.result;
         }

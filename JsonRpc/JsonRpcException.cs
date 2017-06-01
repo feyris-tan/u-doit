@@ -10,34 +10,39 @@ namespace u_doit.JsonRpc
     {
         public JsonRpcException()
         {
-            this.Code = 0;
-            this.Message = null;
+            Error = new Error();
+            Error.code = 0;
+            Error.message = null;
         }
 
         public JsonRpcException(string message) : base(message)
         {
-            this.Code = 0;
-            this.Message = message;
+            Error = new Error();
+            Error.code = 0;
+            Error.message = message;
         }
 
         public JsonRpcException(string message, Exception inner) : base(message, inner)
         {
-            this.Code = 0;
-            this.Message = message;
+            Error = new Error();
+            Error.code = 0;
+            Error.message = message;
         }
 
         public JsonRpcException(string format, params object[] args)
             : base(string.Format(format, args))
         {
-            this.Code = 0;
-            this.Message = string.Format(format, args);
+            Error = new Error();
+            Error.code = 0;
+            Error.message = string.Format(format, args);
         }
 
         public JsonRpcException(int code, string message, string explanation)
             : base(message)
         {
-            this.Code = code;
-            this.Message = message;
+            Error = new Error();
+            Error.code = code;
+            Error.message = message;
         }
 
         protected JsonRpcException(
@@ -52,7 +57,6 @@ namespace u_doit.JsonRpc
             
         }
 
-        public int Code { get; private set; }
-        public new string Message { get; private set; }
+        public Error Error { get; set; }
     }
 }

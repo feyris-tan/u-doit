@@ -432,10 +432,22 @@ namespace u_doit
             SealedCasePc
         }
 
+        public bool DetectVirtualBox()
+        {
+            foreach (Process p in Process.GetProcesses())
+            {
+                if (p.ProcessName.Equals("VBoxTray"))
+                {
+                    Console.WriteLine("-> Detected VirtualBox.");
+                    return true;
+                }
+            }
+            return false;
+        }
         public bool IsVirtualMachine()
         {
             //TODO: Detect QEMU
-            //TODO: Detect VirtualBox
+            if (DetectVirtualBox()) return true;
             Log.Error("Virtual machine detection not yet supported. Assuming this is not a virtual machine.");
             return false;
         }
