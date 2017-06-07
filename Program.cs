@@ -486,30 +486,47 @@ namespace u_doit
                 if (osHandler.OperatingSystemNeedsLicense())    //sowas braucht bekanntlich nur Windows... :D
                 {
                     string cdKey = osHandler.OperatingSystemLicensingInfo();
-                    string licenseName = string.Format("{0}-Lizenz für {1}", uname, Environment.MachineName);
-
-                    ObjectType licenseObjectType = ot.GetObjectTypeFromTitle("Licenses");
-                    List<CmdbObject> knownLicenses = idoit.FindObjects(licenseObjectType);
-                    CmdbObject licenseCmdbObject = null;
-                    operatingSystemCmdbObject = knownLicenses.Find((x) => x.title.Equals(licenseName));
-                    if (operatingSystemCmdbObject == null)
+                    if (!string.IsNullOrEmpty(cdKey))
                     {
-                        //Neues Objekt für die Lizenz anlegen:
-                        licenseCmdbObject = new CmdbObject(idoit.CreateCmdbObject(licenseObjectType, licenseName));
-                        //...und die Lizenz im Feld "Description" hinterlegen.
-                        Global licenseGlobal = idoit.CategoryRead<Global>(licenseCmdbObject.id, new Global())[0];
-                        licenseGlobal.description = cdKey;
+                        string licenseName = string.Format("{0}-Lizenz für {1}", uname, Environment.MachineName);
 
-                        try
+                        ObjectType licenseObjectType = ot.GetObjectTypeFromTitle("Licenses");
+                        List<CmdbObject> knownLicenses = idoit.FindObjects(licenseObjectType);
+                        CmdbObject licenseCmdbObject = null;
+                        operatingSystemCmdbObject = knownLicenses.Find((x) => x.title.Equals(licenseName));
+                        if (operatingSystemCmdbObject == null)
                         {
-                            idoit.CategoryCreate<Global>(licenseCmdbObject, licenseGlobal); //Gut zu wissen: Wenn eine Kategorie nur einmal in einem Objekt vorhanden ist, wird
-                            //sie durch Create überschrieben...
+                            //Neues Objekt für die Lizenz anlegen:
+                            licenseCmdbObject = new CmdbObject(idoit.CreateCmdbObject(licenseObjectType, licenseName));
+                            //...und die Lizenz im Feld "Description" hinterlegen.
+                            Global licenseGlobal = idoit.CategoryRead<Global>(licenseCmdbObject.id, new Global())[0];
+                            licenseGlobal.description = cdKey;
+
+                            try
+                            {
+                                idoit.CategoryCreate<Global>(licenseCmdbObject,
+                                    licenseGlobal); //Gut zu wissen: Wenn eine Kategorie nur einmal in einem Objekt vorhanden ist, wird
+
+                                //sie durch Create überschrieben...
+                            }
+                            catch (JsonRpcException rpcException)
+                            {
+                                Console.WriteLine(rpcException.Error.ToString());
+                            }
+
+                            try
+                            {
+                                idoit.CategoryUpdate(licenseCmdbObject,
+                                    licenseGlobal); //Gut zu wissen: Wenn eine Kategorie nur einmal in einem Objekt vorhanden ist, wird
+
+                                //sie durch Create überschrieben...
+                            }
+                            catch (JsonRpcException rpcException)
+                            {
+                                Console.WriteLine(rpcException.Error.data.ToString());
+                            }
+
                         }
-                        catch (JsonRpcException rpcException)
-                        {
-                            Console.WriteLine(rpcException.Error.data.ToString());
-                        }
-                        
                     }
                     //osSoftwareAssignment.assigned_license = licenseCmdbObject.id;     //kann nicht direkt zugewiesen werden, gibt eine Exception dass irgendwelche SQL-Constraints nicht erfüllt sind...
 

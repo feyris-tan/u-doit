@@ -293,6 +293,17 @@ namespace u_doit.I_DoIt
             Console.WriteLine("Adding a {0} to {1}", theObject.DisplayName, obj.title);
 
             CategoryCreateResponse response;
+            if (theObject.Constant.Equals("C__CATG__GLOBAL"))
+            {
+                response = JsonRpcCaller.Call<CategoryCreateResponse>("cmdb.category.create", new
+                {
+                    apikey = Config.GetInstance().ApiKey,
+                    catgID = 1,
+                    objID = obj.id,
+                    data = theObject,
+                });
+            }
+            
             if (theObject.Constant.Contains("CATS__"))
             {
                 response = JsonRpcCaller.Call<CategoryCreateResponse>("cmdb.category.create", new

@@ -873,7 +873,6 @@ namespace u_doit
                 if (si != null)
                 {
                     outputList.Remove(si);
-                    Console.WriteLine("-> Found weird null SoftwareEntry in the WMI...");
                     continue;
                 }
                 break;
@@ -987,7 +986,15 @@ namespace u_doit
 
         public string OperatingSystemLicensingInfo()
         {
-            return Win32KernelCalls.GetWindowsCdKey();
+            try
+            {
+                return Win32KernelCalls.GetWindowsCdKey();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("-> Failed reading the Windows License Key, sorry. ({0})", e.GetType().Name);
+                return "";
+            }
         }
     }
 }
